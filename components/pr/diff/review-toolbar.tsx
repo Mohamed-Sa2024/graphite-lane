@@ -32,6 +32,7 @@ export function ReviewToolbar({
   viewedCount,
   totalFiles,
   pendingCount,
+  isOwnPr = false,
 }: {
   owner: string;
   repo: string;
@@ -39,6 +40,7 @@ export function ReviewToolbar({
   viewedCount: number;
   totalFiles: number;
   pendingCount: number;
+  isOwnPr?: boolean;
 }) {
   const [event, setEvent] = React.useState<Event | null>(null);
   const [body, setBody] = React.useState("");
@@ -48,6 +50,9 @@ export function ReviewToolbar({
   );
 
   const progress = totalFiles ? Math.round((viewedCount / totalFiles) * 100) : 0;
+  const availableEvents = (Object.keys(eventMeta) as Event[]).filter(
+    (e) => !isOwnPr || e === "COMMENT",
+  );
 
   const submit = () => {
     if (!event) return;
@@ -116,6 +121,12 @@ export function ReviewToolbar({
           </span>
         )}
 
+        {isOwnPr && (
+          <span className="text-xs text-muted">
+            You can comment on your own PR, but not approve or request changes.
+          </span>
+        )}
+
         <div className="flex-1" />
 
         {event ? (
@@ -130,7 +141,7 @@ export function ReviewToolbar({
           </div>
         ) : (
           <div className="flex items-center gap-2">
-            {(Object.keys(eventMeta) as Event[]).map((e) => (
+            {availableEvents.map((e) => (
               <Button
                 key={e}
                 variant={eventMeta[e].variant}

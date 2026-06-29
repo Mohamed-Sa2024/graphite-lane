@@ -5,9 +5,13 @@ import GitHub from "next-auth/providers/github";
 // app runs in mock mode and these routes stay dormant.
 const providers = process.env.AUTH_GITHUB_ID
   ? [
-      GitHub({
-        authorization: { params: { scope: "read:user repo" } },
-      }),
+    GitHub({
+      authorization: {
+        params: {
+          scope: "repo read:user",
+        },
+      },
+    }),
     ]
   : [];
 

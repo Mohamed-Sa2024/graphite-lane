@@ -227,6 +227,7 @@ export function DiffViewer({
         viewedCount={viewed.size}
         totalFiles={detail.files.length}
         pendingCount={pending.length}
+        isOwnPr={detail.author.login === viewer.login}
       />
 
       {helpMounted && (

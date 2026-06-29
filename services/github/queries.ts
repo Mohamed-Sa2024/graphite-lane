@@ -16,7 +16,6 @@ export const PR_FIELDS = /* GraphQL */ `
     author {
       login
       avatarUrl
-      ... on User { name }
     }
     baseRefName
     headRefName
@@ -28,19 +27,18 @@ export const PR_FIELDS = /* GraphQL */ `
     labels(first: 10) {
       nodes { name color }
     }
-    comments { totalCount }
+    comments(first: 50) { totalCount }
     reviews(first: 50) {
       nodes {
         state
-        author { login avatarUrl ... on User { name } }
+        author { login avatarUrl }
       }
     }
     reviewRequests(first: 20) {
       nodes {
         requestedReviewer {
           __typename
-          ... on User { login avatarUrl name }
-          ... on Team { name }
+          ... on User { login avatarUrl }
         }
       }
     }
@@ -103,7 +101,7 @@ export const PR_DETAIL = /* GraphQL */ `
             id
             body
             createdAt
-            author { login avatarUrl ... on User { name } }
+            author { login avatarUrl }
           }
         }
         commits(last: 1) {

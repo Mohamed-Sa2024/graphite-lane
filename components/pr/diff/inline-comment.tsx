@@ -2,6 +2,7 @@
 
 import type { InlineComment as InlineCommentType } from "@/types/pr";
 import { Avatar } from "@/components/ui/kit";
+import { Markdown } from "@/components/pr/markdown";
 import { relativeTime } from "@/lib/utils";
 
 export function InlineCommentCard({ comment }: { comment: InlineCommentType }) {
@@ -22,9 +23,7 @@ export function InlineCommentCard({ comment }: { comment: InlineCommentType }) {
             </span>
           )}
         </div>
-        <p className="whitespace-pre-wrap text-sm leading-relaxed text-fg">
-          {comment.body}
-        </p>
+        <Markdown source={comment.body} />
       </div>
     </div>
   );
